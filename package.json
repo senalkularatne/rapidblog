@@ -1,0 +1,24 @@
+{
+  "name": "rapidblog",
+  "version": "1.0.0",
+  "description": "Create blog posts fast and easy with minimalistic outlook",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/senalkularatne/rapidblog.git"
+  },
+  "author": "Senal Kularatne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/senalkularatne/rapidblog/issues"
+  },
+  "homepage": "https://github.com/senalkularatne/rapidblog#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.2"
+  }
+}
