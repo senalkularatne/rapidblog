@@ -14,17 +14,41 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Setup mongoose and connect to database
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/gounigo');
+mongoose.connect('mongodb://localhost/rapidblog');
+
+// Serve custom style sheets
+app.use(express.static("public"));
 
 //******************************************************************
 //                              Database
 //******************************************************************
 
+// Schema
+var blogSchema = new mongoose.Schema({
+	title: String,
+	image: String,
+	body: String,
+	dateCreated: {type: Date, default: Date.now}
+	// Everything here, can have a default value, which is used if no data is given
+});
 
+var Blog = mongoose.model("Blog", blogSchema);
+
+// Blog.create({
+// 	title: "Surfing in Gold Coast, Australia",
+// 	image: "https://i.dmarge.com/2015/10/viewfromabluemoon.jpg",
+// 	body: "17 There is nothing more that I look forward to than a holiday to get me away from the hustle and bustle of the city.",
+// 	// Leave dateCreated blank
+// });
 
 //******************************************************************
 //                               ROUTES
 //******************************************************************
+
+// INDEX
+app.get("/blogs", function(req, res){
+	res.render("index");
+});
 
 
 
@@ -34,7 +58,7 @@ mongoose.connect('mongodb://localhost/gounigo');
 //******************************************************************
 
 app.listen(3000, function() {
-  console.log("GoUniGo Server is running");
+  console.log("RapidBlog Server is running");
 });
 
 
