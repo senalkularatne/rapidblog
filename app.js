@@ -45,13 +45,23 @@ var Blog = mongoose.model("Blog", blogSchema);
 //                               ROUTES
 //******************************************************************
 
-// INDEX
-app.get("/blogs", function(req, res){
-	res.render("index");
+// HOMEPAGE
+app.get("/", function(req, res) {
+	res.redirect("/blogs");
 });
 
+// INDEX
+app.get("/blogs", function(req, res) {
 
-
+	// Retrieve all the blogs from DB and send it to index
+	Blog.find({}, function(err, blogs) {
+		if(err) {
+			console.log("Error!");
+		} else {
+			res.render( "index", {blogs: blogs} );
+		}
+	});
+});
 
 //******************************************************************
 //                          START SERVER
