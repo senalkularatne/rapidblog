@@ -50,7 +50,7 @@ app.get("/", function(req, res) {
 	res.redirect("/blogs");
 });
 
-// INDEX
+// INDEX Route
 app.get("/blogs", function(req, res) {
 
 	// Retrieve all the blogs from DB and send it to index
@@ -62,6 +62,29 @@ app.get("/blogs", function(req, res) {
 		}
 	});
 });
+
+// NEW Route
+app.get("/blogs/new", function(req, res){
+	res.render("new");
+});
+
+// CREATE Route
+app.post("/blogs", function(req, res){
+	// a) Create blog 
+	// Data sent back will have title, image & body inside blog object
+	Blog.create(req.body.blog, function(err, newBlog){
+		if(err){
+			// If there is error render new form again
+			res,render("new")
+		} else {
+			// b) Redirect
+			res.redirect("/blogs");
+		}
+	});
+});
+
+
+
 
 //******************************************************************
 //                          START SERVER
