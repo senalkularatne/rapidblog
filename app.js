@@ -17,7 +17,13 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/rapidblog');
 
 // Serve custom style sheets
-app.use(express.static("public"));
+app.use(express.static('public'));
+
+// method override for PUT and DELETE
+var methodOverride = require('method-override');
+app.use(methodOverride("_method"));
+// Here we pass in as an argument what to look for (Ex: _method). This can be anything.
+
 
 //******************************************************************
 //                              Database
@@ -94,6 +100,31 @@ app.get("/blogs/:id", function(req, res){
 		}
 	})
 });
+
+// EDIT Route
+app.get("/blogs/:id/edit", function(req, res){
+	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err){
+			res.redirect("/blogs");
+		} else {
+			res.render("edit", {blog:foundBlog});
+		}
+	});
+
+});
+
+// UPDATE Route
+app.put("/blogs/:id", function(req, res){
+	Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+		if (err) {
+			res.redirect("/blogs"); // Redirect back to index
+		} else{
+			res.redirect("/blogs/ + req.params.id"); // Redirect to updated version
+		}
+	});
+});
+
+
 
 
 
