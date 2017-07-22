@@ -9,3 +9,7 @@ i.icon {
 #deletebtn {
 	display: inline;
 }
+
+#rmbtn {
+    font-size: 1em;
+}

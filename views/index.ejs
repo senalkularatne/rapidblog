@@ -1,17 +1,44 @@
 <% include ./partials/header %>
 
-<h1>Index Page</h1>
-
-<% blogs.forEach( function(blog) { %>
-
-	<div>
-		<h2> <%= blog.title %> </h2>
-		<img src="<%= blog.image %>" >
-		<span> <%= blog.dateCreated %> </span>
-		<p> <%= blog.body.substring(0, 110) %> ...</p>
-		<a href="/blogs/<%= blog._id %>">More Info</a>
-	</div>
-
-<% }); %>
+<!-- Gives a centered container -->
+<div class="ui main text container">
+	<div class="ui huge header">Popular posts on RapidBlog</div>
+	<!-- Gives a boxed container with lines -->
+	<div class="ui top attached segment">
+		<!-- We get automatic devider between each item since we are looping-->
+		<div class="ui divided items">
+			<% blogs.forEach( function(blog) { %>
+				<div class="item">
+					<!-- Image -->
+					<div class="image">
+						<img src="<%= blog.image %>" >
+					</div>
+					<!-- Title, Date, Body -->
+					<div class="content">
+						<!-- Title can be clicked to go to show page -->
+						<a class="header" href="/blogs/<%= blog._id %>"> <%= blog.title %> </a>
+						<!-- meta is for putting extra information about the item -->
+						<div class="meta">
+							<span> <%= blog.dateCreated.toDateString() %> </span>
+						</div>
+						<!-- Body -->
+						<div class="body">
+							<!--  - is used instead of = so we can get sanitized HTML -->
+							<p> <%- blog.body.substring(0, 90) %> ...</p>
+						</div>
+						<!-- Extra -->
+						<div class="extra">
+							<a class="ui mini floated basic blue button" 
+							href="/blogs/<%= blog._id %>">Read More
+							<i id = "rmbtn" class="angle double right icon"></i>
+							</a>
+						</div>
+					</div> <!-- content -->	
+				</div> <!-- item -->
+			<% }); %> 
+		</div> <!-- ui divided items -->
+	</div> <!-- /ui top attached segemnt -->
+</div> <!-- ui main text container -->
 
 <% include ./partials/footer %>
+

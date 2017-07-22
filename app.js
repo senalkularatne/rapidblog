@@ -24,6 +24,12 @@ var methodOverride = require('method-override');
 app.use(methodOverride("_method"));
 // Here we pass in as an argument what to look for (Ex: _method). This can be anything.
 
+// express-sanitizer used for sanitizing form inputs. This line needs to go after body-parser
+var expressSanitizer = require('express-sanitizer');
+app.use(expressSanitizer());
+
+
+
 
 //******************************************************************
 //                              Database
@@ -76,6 +82,9 @@ app.get("/blogs/new", function(req, res){
 
 // CREATE Route
 app.post("/blogs", function(req, res){
+	// Sanitize
+	req.body.blog.body = req.sanitize(req.body.blog.body);
+
 	// a) Create blog 
 	// Data sent back will have title, image & body inside blog object
 	Blog.create(req.body.blog, function(err, newBlog){
@@ -114,6 +123,9 @@ app.get("/blogs/:id/edit", function(req, res){
 
 // UPDATE Route
 app.put("/blogs/:id", function(req, res){
+	// Sanitize
+	req.body.blog.body = req.sanitize(req.body.blog.body);
+
 	Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
 		if (err) {
 			res.redirect("/blogs"); // Redirect back to index
